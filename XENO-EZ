@@ -1,2 +1,87 @@
---[[ Obfuscated Script ]]
-local A=game:GetService("Players")local B=A.LocalPlayer;local C=B.Character;local D=C.Humanoid;local E=game:GetService("VirtualInputManager")local F=game:GetService("ReplicatedStorage")local G=game:GetService("GuiService")local H=function(I)if B.Backpack:FindFirstChild(I)then local J=B.Backpack:FindFirstChild(I)D:EquipTool(J)end end;local K=loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))();local L=K.CreateLib("Fisch Xeno Ez","DarkTheme")local M=L:NewTab("Menu")local N=M:NewSection("Enable All")N:NewToggle("AutoCast","",function(O)_G.a=O;pcall(function()while _G.a do task.wait();local P=C:FindFirstChildOfClass("Tool")task.wait(0.001)P.events.cast:FireServer(100,1)end end)end)N:NewToggle("AutoShake","",function(Q)_G.b=Q;pcall(function()while _G.b do task.wait()local R=B:WaitForChild("PlayerGui")local S=R:FindFirstChild("shakeui")if S and S.Enabled then local T=S:FindFirstChild("safezone")if T then local U=T:FindFirstChild("button")if U and U:IsA("ImageButton")and U.Visible then G.SelectedObject=U;E:SendKeyEvent(true,Enum.KeyCode.Return,false,game)E:SendKeyEvent(false,Enum.KeyCode.Return,false,game)end end end end end)end)N:NewToggle("AutoReel","",function(V)_G.c=V;pcall(function()while _G.c do task.wait()for W,X in pairs(B.PlayerGui:GetChildren())do if X:IsA("ScreenGui")and X.Name=="reel"then if X:FindFirstChild("bar")then task.wait(0.001)F.events.reelfinished:FireServer(100,true)end end end end end)end)N:NewToggle("Freeze Character","",function(Y)C.HumanoidRootPart.Anchored=Y end)spawn(function()while task.wait()do if _G.a then pcall(function()for W,Z in pairs(B.Backpack:GetChildren())do if Z:IsA("Tool")and Z.Name:lower():find("rod")then H(Z.Name)end end end)end end end)
+--[[ เอาไปใช้ก็ให้เครดิตด้วย XENO EZ ]]
+local A = game:GetService("Players")
+local B = A.LocalPlayer
+local C = B.Character
+local D = C.Humanoid
+local E = game:GetService("VirtualInputManager")
+local F = game:GetService("ReplicatedStorage")
+local G = game:GetService("GuiService")
+
+local H = function(I)
+    if B.Backpack:FindFirstChild(I) then
+        local J = B.Backpack:FindFirstChild(I)
+        D:EquipTool(J)
+    end
+end
+
+local K = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local L = K.CreateLib("Fisch Xeno Ez", "DarkTheme")
+local M = L:NewTab("Menu")
+local N = M:NewSection("Enable All")
+
+N:NewToggle("AutoCast", "", function(O)
+    _G.a = O
+    pcall(function()
+        while _G.a do
+            local P = C:FindFirstChildOfClass("Tool")
+            P.events.cast:FireServer(100, 1)
+            task.wait(0.000001) 
+        end
+    end)
+end)
+
+N:NewToggle("AutoShake", "", function(Q)
+    _G.b = Q
+    pcall(function()
+        while _G.b do
+            local R = B:WaitForChild("PlayerGui")
+            local S = R:FindFirstChild("shakeui")
+            if S and S.Enabled then
+                local T = S:FindFirstChild("safezone")
+                if T then
+                    local U = T:FindFirstChild("button")
+                    if U and U:IsA("ImageButton") and U.Visible then
+                        G.SelectedObject = U
+                        E:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
+                        E:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
+                    end
+                end
+            end
+            task.wait(0.000001) 
+        end
+    end)
+end)
+
+N:NewToggle("AutoReel", "", function(V)
+    _G.c = V
+    pcall(function()
+        while _G.c do
+            for _, X in pairs(B.PlayerGui:GetChildren()) do
+                if X:IsA("ScreenGui") and X.Name == "reel" then
+                    if X:FindFirstChild("bar") then
+                        F.events.reelfinished:FireServer(100, true)
+                    end
+                end
+            end
+            task.wait(0.000001) -- ลดเวลารอ
+        end
+    end)
+end)
+
+N:NewToggle("Freeze Character", "", function(Y)
+    C.HumanoidRootPart.Anchored = Y
+end)
+
+spawn(function()
+    while task.wait(0.000001) do -- ลดเวลารอ
+        if _G.a then
+            pcall(function()
+                for _, Z in pairs(B.Backpack:GetChildren()) do
+                    if Z:IsA("Tool") and Z.Name:lower():find("rod") then
+                        H(Z.Name)
+                    end
+                end
+            end)
+        end
+    end
+end)
